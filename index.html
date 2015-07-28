@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <title id="title">Socket.IO chat</title>
+    <title id="title">WnCC Chatbot</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
+      body { background: #000000; font: 16px Helvetica, Arial; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
       form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
@@ -15,24 +15,24 @@
     </style>
   </head>
   <body>
-    <div id="div1" style="height:550px; overflow-y:auto;">
+    <div id="div1" style="height:550px; overflow-y:auto; color:#7FFF00">
     <ul id="messages"></ul>
     </div>
     <div>
     <form action="">
-      <input id="m" autocomplete="off" onfocus="isTyping()"/><button>Send</button>
+      <input id="m" autocomplete="off" onkeypress="isTyping()"/><button>Send</button>
     </form>
   </div>
     <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
-  var user=prompt("Enter your usename");
+  var user=prompt("Enter your username");
   var socket = io();
   socket.emit('add user',user);
     
   $('form').submit(function(){
-    socket.emit('chat message', user+": "+$('#m').val());
+    socket.emit('chat message', '<b>'+user+"</b>: "+$('#m').val());
     $('#m').val('');
    //$('#m').blur();
     return false;
@@ -44,7 +44,7 @@
     
   }
   socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
+    $('#messages').append($('<li>').html(msg));
     $('#title').text(msg);
     $("#div1").animate({ scrollTop: $("#div1")[0].scrollHeight}, 1000);
     //$("#fr").animate({ scrollTop: $(document).height() }, 1000);
