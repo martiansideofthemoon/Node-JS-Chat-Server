@@ -15,13 +15,14 @@
     </style>
   </head>
   <body>
-   
+    <div id="div1" style="height:550px; overflow-y:auto;">
     <ul id="messages"></ul>
-    
+    </div>
+    <div>
     <form action="">
       <input id="m" autocomplete="off" onfocus="isTyping()"/><button>Send</button>
     </form>
- 
+  </div>
     <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -33,7 +34,7 @@
   $('form').submit(function(){
     socket.emit('chat message', user+": "+$('#m').val());
     $('#m').val('');
-   $('#m').blur();
+   //$('#m').blur();
     return false;
 
   });
@@ -45,7 +46,8 @@
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
     $('#title').text(msg);
-    $("#fr").animate({ scrollTop: $(document).height() }, 1000);
+    $("#div1").animate({ scrollTop: $("#div1")[0].scrollHeight}, 1000);
+    //$("#fr").animate({ scrollTop: $(document).height() }, 1000);
   });
   socket.on('is typing', function(msg){
     $('#title').text(msg);
